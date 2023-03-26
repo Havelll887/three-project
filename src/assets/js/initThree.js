@@ -34,6 +34,10 @@ export class ThreeEngine {
     const { arcs,pieSvgDataUri } = initSVGObject();
     addGeoObject(group, arcs,pieSvgDataUri);
 
+    let selectedObject = null;
+    const raycaster = new THREE.Raycaster();
+		const pointer = new THREE.Vector2();
+
     this.container = container;
     this.scene = scene;
 
@@ -51,6 +55,43 @@ export class ThreeEngine {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener("resize", onWindowResize);
+
+    let onPointerMove = (event) => {
+     
+
+			if ( selectedObject ) {
+
+				selectedObject.scale.set(1,1,1)
+				selectedObject = null;
+			}
+      
+			pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+			pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+			raycaster.setFromCamera( pointer, camera );
+
+			const intersects = raycaster.intersectObject( group, true );
+
+			if ( intersects.length > 0 ) {
+
+				const res = intersects.filter( function ( res ) {
+
+					return res && res.object;
+
+				} )[ 0 ];
+
+				if ( res && res.object ) {
+          console.log('dedede',res)
+
+					selectedObject = res.object;
+					selectedObject.scale.set(2,2,2)
+
+				}
+
+			}
+    }
+
+    document.addEventListener( 'pointermove', onPointerMove );
 
     // 逐帧渲染threejs
     let animate = () => {
