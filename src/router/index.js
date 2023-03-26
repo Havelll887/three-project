@@ -8,11 +8,6 @@ const routes = [
     path: '/chartsDemo/threePie',
     name: 'threePie',
     component: () => import('@/views/chartsDemo/threePie.vue')
-  },
-  {
-    path: '/testPage',
-    name: 'testPage',
-    component: () => import('@/views/testPage.vue')
   }
 ]
 

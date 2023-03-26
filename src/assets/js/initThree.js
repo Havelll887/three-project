@@ -23,7 +23,7 @@ export class ThreeEngine {
       1,
       1000
     );
-    camera.position.set(3, 3, 4); // 设置相机位置
+    camera.position.set(6,6, 8); // 设置相机位置
     camera.lookAt(new Vector3(0, 0, 0)); // 设置相机看先中心点
     camera.up = new Vector3(0, 1, 0); // 设置相机自身方向
     // camera.aspect = window.innerWidth / window.innerHeight;
