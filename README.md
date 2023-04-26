@@ -1,4 +1,4 @@
-# demopie
+# threePractice
 
 ## Project setup
 ```

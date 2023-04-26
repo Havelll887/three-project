@@ -31,8 +31,7 @@ export class ThreeEngine {
 
     const group = new THREE.Group();
     scene.add(group);
-    const { arcs,pieSvgDataUri } = initSVGObject();
-    addGeoObject(group, arcs,pieSvgDataUri);
+
 
     let selectedObject = null;
     const raycaster = new THREE.Raycaster();
@@ -40,6 +39,7 @@ export class ThreeEngine {
 
     this.container = container;
     this.scene = scene;
+    this.group = group;
 
     let orbitControls = new OrbitControls(camera, renderer.domElement);
 
@@ -109,5 +109,9 @@ export class ThreeEngine {
     object.forEach((elem) => {
       this.scene.add(elem); // 场景添加模型
     });
+  }
+  addSvg(){
+    const { arcs,pieSvgDataUri } = initSVGObject();
+    addGeoObject(this.group, arcs,pieSvgDataUri);
   }
 }

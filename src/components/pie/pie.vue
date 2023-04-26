@@ -19,6 +19,7 @@ export default {
     // this.ThreeEngine.addObject(...allBaseObject); // 添加基础模型
     this.ThreeEngine.addObject(...allLights)  // 添加光线
     this.ThreeEngine.addObject(...allHelper)   // 添加辅助
+    this.ThreeEngine.addSvg()   
   },
 };
 </script>
