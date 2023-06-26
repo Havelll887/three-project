@@ -11,11 +11,6 @@ module.exports = {
                     outputStyle: 'expanded'
                 }
             },
-            postcss: {
-                plugins: [
-                    postcss
-                ]
-            }
         }
     }
 }

@@ -14,11 +14,28 @@
 export default {
     name: "EleLayout",
     // components: { RouterView }
+    watch: {
+        $route: {
+            handler(newV, oldV) {
+                // 当前页面路由path
+                // this.curRouterPath();
+                console.log('==-=-=', newV, oldV)
+            },
+            // 深度观察监听
+            deep: true
+        }
+    },
     methods: {
         showOther(type) {
             switch (type) {
-                case 'threePie': console.log(type); break;
-                case 'threeMap': console.log(type); break;
+                case 'threePie':
+                    this.$router.push({
+                        path: '/threePie'
+                    }); break;
+                case 'threeMap':
+                    this.$router.push({
+                        path: '/threeMap'
+                    }); break;
             }
         }
     }
