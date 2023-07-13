@@ -7,13 +7,13 @@
 <script>
 import pieCharts from '@/components/pie/pie.vue'
 export default {
-    components:{pieCharts}
+  components: { pieCharts }
 }
 </script>
 
 <style scoped>
-.pieCharts{
-    width: 100%;
-    height: 100%;
+.pieCharts {
+  width: 100%;
+  height: 100%;
 }
 </style>
