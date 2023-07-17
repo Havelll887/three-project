@@ -1,0 +1,1096 @@
+$shadow-3-down: 0upx 6upx 16upx -8upx rgba(0, 0, 0, 0.08), 0upx 9upx 28upx 0upx rgba(0, 0, 0, 0.05), 0upx 12upx 48upx 16upx rgba(0, 0, 0, 0.03);
+$theme-color: #e01f20;
+
+/**
+ * 颜色变量
+ */
+// 白色
+$color-white: #ffffff;
+// 浅白色
+$color-pale-white: #edf8ff;
+// 红色
+$color-red: #ec3a22;
+
+$color-light-red:#fe5741;
+$color-bright-red:#ec3a22;
+// 浅红色
+$color-pale-red: #ff6d26;
+// 金色
+$color-gold: #ffc925;
+// 黄色
+$color-yellow: #ffc925;
+// 青色
+$color-cyan: #57d0da;
+// 绿色
+$color-green: #20cd57;
+$color-light-green: #2cd5a1;
+// 蓝色
+$color-blue: #41a6fc;
+// 亮蓝色
+$color-bright-blue: #00ffff;
+$color-dark-blue:#1b2d5f;
+// 灰色
+$color-grey: #83959e;
+$color-bright-grey:#f2f7f8;
+$color-dark-grey:#999999;
+$color-thin-gray:#d6dfe2;
+// 浅灰
+$color-light-grey: #c9d6d6;
+// 暗蓝色 #276399
+$color-blue-dark: #276399;
+// 深蓝色 #122639
+$color-blue-deep: #122639;
+// 按钮选中蓝色 #173e66
+$color-blue-btn: #173e66;
+$color-light-blue:#2e9fff;
+$color-light-green-blue:#1ee6e6;
+// 橙色 color: #ff7c36;
+$color-orange: #ff7c36;
+$color-dark-orange:#f47239;
+// 青蓝色
+$color-cyan : #46f9fd;
+$color-light-cyan : #45fafe;
+$color-bright-cyan : #46fbfe;
+$color-border:#3f668b;
+// 浅青色
+$color-pale-cyan : #90ffff;;
+
+/**
+ * 文字颜色
+ */
+// 白色
+.color-white {
+	color: $color-white;
+}
+
+// 浅白色
+.color-pale-white {
+	color: $color-pale-white;
+}
+
+// 红色
+.color-red {
+	color: $color-red;
+}
+.color-dark-orange{
+    color:$color-dark-orange
+}
+// 浅红色
+.color-pale-red {
+	color: $color-pale-red;
+}
+// 金色
+.color-gold {
+	color: $color-gold;
+}
+// 黄色
+.color-yellow {
+	color: $color-yellow;
+}
+// 青色
+.color-cyan {
+	color: $color-cyan;
+}
+// 绿色
+.color-green {
+	color: $color-green;
+}
+
+.color-light-green{
+    color:$color-light-green
+}
+
+
+/**
+ * 红黄码栏目字体
+ */
+@mixin fs-12 {
+	// font-family: MicrosoftYaHei;
+	font-size: 12px !important;
+}
+
+@mixin fs-14 {
+	// font-family: MicrosoftYaHei;
+	font-size: 14px !important;
+}
+
+@mixin fs-16 {
+	// font-family: MicrosoftYaHei;
+	font-size: 16px !important;
+}
+
+@mixin fs-18 {
+	// font-family: MicrosoftYaHei;
+	font-size: 18px !important;
+}
+
+@mixin fs-20 {
+	// font-family: MicrosoftYaHei;
+	font-size: 20px !important;
+}
+@mixin fs-22 {
+	// font-family: MicrosoftYaHei;
+	font-size: 22px !important;
+}
+@mixin fs-24 {
+	// font-family: MicrosoftYaHei-Bold;
+	font-size: 24px !important;
+	// font-weight: bold;
+}
+@mixin fs-28 {
+	// font-family: MicrosoftYaHei-Bold;
+	font-size: 28px !important;
+	// font-weight: bold;
+}
+@mixin fs-30 {
+	// font-family: MicrosoftYaHei-Bold;
+	font-size: 30px !important;
+	// font-weight: bold;
+}
+
+.fw-bold {
+	font-weight: bold;
+}
+.fs-oblique {
+	font-style: oblique;
+	padding-right: 5px;
+}
+
+// 灰色字体
+.fs-12-grey {
+	@include fs-12;
+	color: $color-grey !important;
+}
+
+.fs-14-grey {
+	@include fs-14;
+	color: $color-grey !important;
+}
+
+.fs-16-grey {
+	@include fs-16;
+	color: $color-grey !important;
+}
+
+.fs-18-grey {
+	// @include fs-18;
+	@include fs-14;
+	// font-family: YouSheBiaoTiHei;
+	font-weight: bold;
+	font-style: italic;
+	color: $color-grey !important;
+}
+
+.fs-24-grey {
+	@include fs-24;
+	color: $color-grey !important;
+}
+
+.fs-14-bright-grey{
+    @include fs-14;
+	color: $color-bright-grey !important;
+    opacity: 0.8;
+}
+
+
+// 红色字体
+.fs-12-red {
+	@include fs-12;
+	color: $color-red !important;
+}
+
+.fs-14-red {
+	@include fs-14;
+	color: $color-red !important;
+}
+
+.fs-14-white {
+	@include fs-14;
+	color: $color-white !important;
+}
+
+.fs-16-red {
+	@include fs-16;
+	color: $color-red !important;
+}
+
+.fs-18-red {
+	// @include fs-18;
+	@include fs-14;
+	// font-family: YouSheBiaoTiHei;
+	font-weight: bold;
+	font-style: italic;
+	color: $color-red !important;
+}
+
+.fs-24-red {
+	@include fs-24;
+	color: $color-red !important;
+}
+
+// 绿色字体
+.fs-18-green {
+	// @include fs-18;
+	@include fs-14;
+	// font-family: YouSheBiaoTiHei;
+	font-weight: bold;
+	font-style: italic;
+	color: $color-green !important;
+}
+
+// 黄色字体
+.fs-12-yellow {
+	@include fs-12;
+	color: $color-yellow !important;
+}
+.fs-14-yellow {
+	@include fs-14;
+	color: $color-yellow !important;
+}
+.fs-16-yellow {
+	@include fs-16;
+	color: $color-yellow !important;
+}
+.fs-24-yellow {
+	@include fs-24;
+	color: $color-yellow !important;
+}
+
+// 白色字体
+.fs-30-white {
+	@include fs-30;
+	color: $color-white !important;
+}
+.fs-28-white {
+	@include fs-28;
+	color: $color-white !important;
+}
+.fs-24-white {
+	@include fs-24;
+	color: $color-white !important;
+}
+.fs-22-white {
+	@include fs-22;
+	color: $color-white !important;
+}
+.fs-16-white {
+	@include fs-16;
+	color: $color-white !important;
+}
+.fs-12-white {
+	@include fs-12;
+	color: $color-white !important;
+}
+
+.fs-16-pale-white {
+	@include fs-16;
+	color: $color-pale-white !important;
+}
+
+// 青色字体
+.fs-12-cyan {
+	@include fs-12;
+	color: $color-cyan !important;
+}
+.fs-14-cyan {
+	@include fs-14;
+	color: $color-cyan !important;
+}
+.fs-16-cyan {
+	@include fs-16;
+	color: $color-cyan !important;
+}
+.fs-18-cyan {
+	@include fs-18;
+	color: $color-cyan !important;
+}
+.fs-24-cyan {
+	@include fs-24;
+	color: $color-cyan !important;
+}
+
+// 浅红色
+.fs-16-pale-red {
+	@include fs-16;
+	color: $color-pale-red !important;
+}
+.fs-24-pale-red {
+	@include fs-24;
+	color: $color-pale-red !important;
+}
+
+// 蓝色
+.fs-24-blue {
+	@include fs-24;
+	color: $color-blue !important;
+}
+.fs-14-blue {
+	@include fs-14;
+	color: $color-blue !important;
+}
+// 橙色
+.fs-14-orange {
+	@include fs-14;
+	color: $color-orange !important;
+}
+
+/**
+ * 背景颜色
+ */
+// 红色
+.bg-red {
+	background-color: $color-red !important;
+}
+// 浅红色
+.bg-pale-red {
+	background-color: $color-pale-red !important;
+}
+// 金色
+.bg-gold {
+	background-color: $color-gold !important;
+}
+// 黄色
+.bg-yellow {
+	background-color: $color-yellow !important;
+}
+// 青色
+.bg-cyan {
+	background-color: $color-cyan !important;
+}
+// 绿色
+.bg-green {
+	background-color: $color-green !important;
+}
+// 蓝色
+.bg-blue {
+	background-color: $color-blue !important;
+}
+// 
+.bg-warning {
+	background-color: #ffa836 !important;
+}
+/* flex布局公用样式 */
+@mixin flex-row {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+}
+
+@mixin flex-column {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+@mixin flex1 {
+	-webkit-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+@mixin flex2 {
+	-webkit-box-flex: 2;
+	-ms-flex: 2;
+	flex: 2;
+}
+
+@mixin flex3 {
+	-webkit-box-flex: 3;
+	-ms-flex: 3;
+	flex: 3;
+}
+
+@mixin flex4 {
+	-webkit-box-flex: 4;
+	-ms-flex: 4;
+	flex: 4;
+}
+@mixin flex5 {
+	-webkit-box-flex: 5;
+	-ms-flex: 5;
+	flex: 5;
+}
+@mixin flex6 {
+	-webkit-box-flex: 6;
+	-ms-flex: 6;
+	flex: 6;
+}
+
+@mixin flex-grow1 {
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+}
+
+@mixin flex-justify-end {
+	-webkit-box-pack: end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+}
+
+@mixin flex-justify-between {
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+@mixin flex-justify-around {
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+}
+
+@mixin justify-content-stretch {
+	-webkit-box-pack: stretch;
+	-ms-flex-pack: stretch;
+	justify-content: stretch;
+}
+
+@mixin flex-justify-evenly {
+	-webkit-box-pack: space-evenly;
+	-ms-flex-pack: space-evenly;
+	justify-content: space-evenly;
+}
+
+@mixin flex-justify-center {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+}
+
+@mixin flex-align-items-end {
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	align-items: flex-end;
+}
+
+@mixin flex-align-items-stretch {
+	-webkit-box-align: stretch;
+	-ms-flex-align: stretch;
+	align-items: stretch;
+}
+
+@mixin flex-align-items-center {
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+@mixin flex-center {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+@mixin flex-wrap {
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+@mixin flex-align-self-start {
+	-ms-flex-item-align: start;
+	align-self: flex-start;
+}
+@mixin align-self-center {
+	align-self: center;
+}
+
+@mixin row-align-center {
+	@include flex-row;
+	@include flex-align-items-center;
+}
+
+@mixin white-space-nowrap {
+	white-space: nowrap;
+}
+
+@mixin text-overflow-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.row-align-center {
+	@include row-align-center;
+}
+
+.krt-wrap {
+	@include flex-column;
+	padding: 20px;
+	height: calc(100% - 87px);
+}
+
+.krt-layout-left {
+	@include flex-column;
+}
+
+.krt-layout-center {
+	@include flex-column;
+}
+.krt-layout-right {
+	@include flex-column;
+}
+
+.shadow-3-down {
+	box-shadow: $shadow-3-down;
+}
+
+.custom-radio {
+	@include flex-row;
+}
+.custom-radio-icon {
+	margin: 0 15upx;
+	width: 30upx;
+	height: 30upx;
+	border-radius: 50%;
+	border: 1upx solid #999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.custom-radio-icon-select {
+	width: 14upx;
+	height: 14upx;
+	border-radius: 50%;
+	background: #5b84f8;
+}
+
+.custom-radio-label {
+	// font-family: 'PingFangSC-Medium';
+	font-size: 26upx;
+	color: #333333;
+}
+
+.select-border-color {
+	border: 1upx solid #5b84f8;
+}
+
+.other-login-type {
+	// font-family: 'PingFangSC-Medium';
+	font-size: 28upx;
+	line-height: 70upx;
+	color: #999999;
+	@include flex-row;
+	@include flex-center;
+	text {
+		margin: 0 30upx;
+		white-space: nowrap;
+	}
+}
+
+.h-form-list-item {
+	@include flex-row;
+	@include flex-center;
+	padding: 47upx 0 20upx 0;
+}
+
+.custom-popup {
+	@include flex-row;
+	@include flex-center;
+}
+.custom-popup-wrap {
+	@include flex-column;
+	// @include flex-align-items-center;
+	padding: 30upx;
+	width: 80%;
+	min-height: 300upx;
+	background-color: rgb(255, 255, 255);
+	border-radius: 10upx;
+	position: relative;
+}
+
+.custom-popup-title {
+	// font-family: 'PingFangSC-Medium';
+	font-size: 37rpx;
+	font-weight: bold;
+}
+.custom-popup-title-icon {
+	width: 99upx;
+	height: 99upx;
+	@include align-self-center;
+}
+.custom-popup-botton-area {
+	display: flex;
+}
+
+.popup-close-copy {
+	@include flex-row;
+	@include flex-center;
+	position: absolute;
+	bottom: -100upx;
+	top: -33upx;
+	right: -33upx;
+	width: 67upx;
+	height: 67upx;
+	border-radius: 50%;
+	font-size: 37upx;
+}
+.custom-popup-wrap {
+	padding: 30upx 50upx 60upx 50upx;
+}
+.custom-popup-content {
+	font-size: 36upx;
+	// font-family: 'PingFang';
+	color: rgb(255, 92, 92);
+	font-weight: bold;
+	margin: 87upx 0;
+}
+.position-relative{
+	position: relative;
+}
+// 无渐变背景
+.background-image-none {
+	background-image: none !important;
+}
+
+// 向右渐变
+.to-right-panel-linear-gradient {
+	background-image: linear-gradient(90deg, rgba(7, 12, 31, 0.85) 0%, rgba(7, 12, 31, 0.05) 100%) !important;
+}
+
+// 向左渐变
+.to-left-panel-linear-gradient {
+	background-image: linear-gradient(270deg, rgba(7, 12, 31, 0.85) 0%, rgba(7, 12, 31, 0.05) 100%) !important;
+}
+
+// 向上渐变
+.to-top-panel-linear-gradient {
+	background-image: linear-gradient(0deg, rgba(7, 12, 31, 0.6) 24%, rgba(7, 12, 31, 0.05) 100%) !important;
+}
+
+// 竖线分隔线
+.split-line {
+	width: 1px;
+	height: 32px;
+	background-image: linear-gradient(0deg, transparent 0%, #7adff0 50%, transparent 100%);
+	margin: 0 16px;
+}
+// 指针手形
+.cursor-pointer{
+	cursor: pointer;
+}
+@mixin line-clamp-one {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+@mixin text-linear-gradient {
+	background-image: linear-gradient(to top, rgb(78, 196, 253) 12%, rgb(191, 213, 230) 45%, rgb(251, 252, 253) 75%, #ffffff);
+	-webkit-background-clip: text;
+	color: transparent;
+}
+
+@mixin text-linear-gradient-before {
+	content: attr(text);
+	position: absolute;
+	z-index: -1;
+	text-shadow: 4px 6px 7px #182d43;
+}
+
+.text-linear-gradient-blue {
+	@include text-linear-gradient;
+	// font-family: YouSheBiaoTiHei;
+	// font-size: 26px;
+	font-size: 22px;
+	font-weight: bold;
+	font-style: italic;
+	// color: #41a6fc;
+	background-image: linear-gradient(to top, rgb(134, 171, 239) 45%, rgb(191, 213, 230) 60%, rgb(251, 252, 253) 75%, #ffffff);
+}
+
+.text-linear-gradient-blue::before {
+	@include text-linear-gradient-before;
+}
+
+.text-linear-gradient-cyan {
+	@include text-linear-gradient;
+	// font-family: YouSheBiaoTiHei;
+	// font-size: 26px;
+	font-size: 22px;
+	font-weight: bold;
+	font-style: italic;
+	// color: #41a6fc;
+	background-image: linear-gradient(to top, rgb(22, 218, 235) 45%, rgb(171, 235, 249) 60%, rgb(251, 252, 253) 75%, #ffffff);
+}
+
+.text-linear-gradient-cyan::before {
+	@include text-linear-gradient-before;
+}
+
+.text-linear-gradient-yellow {
+	@include text-linear-gradient;
+	// font-family: YouSheBiaoTiHei;
+	// font-size: 26px;
+	font-size: 22px;
+	font-weight: bold;
+	font-style: italic;
+	// color: #41a6fc;
+	background-image: linear-gradient(to top, rgb(255, 170, 59) 45%, rgb(247, 221, 195) 60%, rgb(251, 252, 253) 75%, #ffffff);
+}
+.text-linear-wihte-blue {
+	color: transparent;
+	background-image: linear-gradient(to bottom, #f8fbfe, #60b7bc);
+	-webkit-background-clip: text;
+}
+.text-linear-gradient-yellow::before {
+	@include text-linear-gradient-before;
+}
+
+.text-nowrap {
+	word-break: keep-all;
+	white-space: nowrap;
+}
+.pointer-auto {
+	pointer-events: auto;
+}
+.pointer-none {
+	pointer-events: none;
+}
+@mixin krt-rect-border {
+	background: linear-gradient(to bottom, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) left top no-repeat,
+		linear-gradient(to right, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) left top no-repeat,
+		linear-gradient(to bottom, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) right top no-repeat,
+		linear-gradient(to left, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) right top no-repeat,
+		linear-gradient(to top, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) left bottom no-repeat,
+		linear-gradient(to right, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) left bottom no-repeat,
+		linear-gradient(to top, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) right bottom no-repeat,
+		linear-gradient(to left, #33cdfa 0px, #33cdfa 1px, transparent 2px, transparent 100%) right bottom no-repeat;
+	background-size: 10px 10px;
+	padding: 3px;
+}
+/* 四边直角边框 */
+.krt-rect-border {
+	@include krt-rect-border;
+}
+
+.krt-check-item {
+	// font-family: MicrosoftYaHei;
+	font-size: 16px;
+	// font-weight: bold;
+	color: #ffffff;
+	.krt-check-item-status-img {
+		// width: 16px;
+		height: 20px;
+	}
+	.krt-check-item-status-text {
+		// font-family: MicrosoftYaHei-Bold;
+		font-weight: bold;
+		color: #ffffff;
+		margin: 0 15px;
+	}
+	.krt-check-item-qy {
+		// font-family: MicrosoftYaHei;
+		font-size: 16px;
+		color: #ffffff;
+	}
+	.info {
+		margin: 10px 0 15px 0;
+		.time {
+			font-size: 14px;
+			color: #a4a4a4;
+		}
+		.krt-check-item-name {
+			// font-family: MicrosoftYaHei;
+			font-size: 14px;
+			color: #c17e24;
+			background-color: rgba(204, 121, 42, 0.1);
+			border-radius: 12px;
+			margin: 0 10px;
+		}
+		.krt-check-item-person {
+			font-size: 14px;
+			color: #a4a4a4;
+		}
+	}
+}
+
+// 底部上图tab切换按钮样式
+.krt-bottom-tab-bar {
+	position: relative;
+	.krt-bottom-tab-item-icon {
+		width: 70px;
+		height: 46px;
+	}
+	.krt-bottom-tab-item-text {
+		position: absolute;
+		// font-family: YouSheBiaoTiHei;
+		// font-size: 20px;
+		font-size: 16px;
+		font-weight: bold;
+		font-style: italic;
+		color: #9eb3be;
+		margin-left: 40px;
+		white-space: nowrap;
+	}
+
+	.krt-bottom-tab-item-active {
+		color: #f3faff;
+		text-shadow: 0 0 4px #c1eaff; //设置发光效果
+	}
+}
+.el-popover{
+	background: transparent !important;
+	border: 0 !important;
+}
+.popper__arrow{
+	display: none !important;
+}
+
+/**
+ * vxe-table表格样式 start
+ */
+$tr-font-size: 14px;
+// body样式修改
+::v-deep .vxe-table--render-default .vxe-table--body-wrapper {
+	background: transparent;
+	font-size: $tr-font-size;
+}
+
+::v-deep .vxe-table--header-wrapper {
+	background-color: transparent !important;
+}
+
+// 列头
+::v-deep .vxe-header--column {
+	// background-color: #09142c !important;
+	// background-color: rgb(26, 47, 76) !important;
+	background-color: rgb(26, 47, 76) !important;
+	
+	color: #ffffff !important;
+	height: 36px !important;
+	font-size: $tr-font-size;
+}
+
+// 表头文字
+::v-deep .vxe-cell--title{
+	color: #9ba6ae!important;
+}
+
+// 奇数行
+::v-deep .vxe-table--render-default .vxe-body--row {
+	background: rgb(22, 50, 84);
+	// background: transparent;
+	color: #ffffff;
+	font-size: $tr-font-size;
+}
+
+// 奇数行悬浮样式修改
+::v-deep .vxe-table--render-default .vxe-body--row.row--hover {
+	background: rgba(16, 46, 87, 1);
+	border: solid 1px transparent;
+	box-shadow: inset 0px 0px 36px 0px rgba(0, 145, 255, 1);
+	font-size: $tr-font-size;
+}
+
+// 偶数行
+::v-deep .vxe-table--render-default .vxe-body--row.row--stripe {
+	background-color: rgb(26, 47, 76);
+	// background-color: transparent;
+	color: #ffffff;
+	font-size: $tr-font-size;
+}
+// 偶数行悬浮样式修改
+::v-deep .vxe-table--render-default .vxe-body--row.row--stripe.row--hover {
+	background: rgba(16, 46, 87, 1);
+	border: solid 1px #a2d1e5;
+	box-shadow: inset 0px 0px 36px 0px rgba(0, 145, 255, 1);
+	font-size: $tr-font-size;
+}
+
+// 分页样式修改
+::v-deep .vxe-grid--pager-wrapper {
+	margin-top: 20px !important;
+}
+::v-deep .vxe-pager.is--perfect {
+	// background-color: #0c102b !important;
+	background-color: transparent !important;
+	color: #ffffff;
+	border: none;
+	button,
+	// span,
+	.vxe-input--inner,
+	.vxe-pager--goto {
+		// color: #ffffff;
+		// background-color: #12284e;
+		background-color: #0c1c47 !important;
+		border: solid 1px #a2d1e5;
+		// box-shadow: inset 0px 0px 16px 0px rgba(24, 109, 180, 1);
+		color: rgb(225, 226, 232) !important;
+		font-size: $tr-font-size;
+	}
+}
+::v-deep.is--active {
+	box-shadow: inset 0px 0px 16px 0px rgba(24, 109, 180, 1) !important;
+}
+
+// loading加载样式
+::v-deep.vxe-grid.is--loading:before{
+	// background-color: hsla(30deg, 7%, 4%, .5)!important;
+	background-color: rgba(0,0,0,0.2)!important;
+}
+::v-deep .vxe-grid.is--loading>.vxe-table .vxe-loading{
+	background-color: rgba(0,0,0,0.2)!important;
+}
+/**
+ * vxe-table表格样式 end
+ */
+
+/**
+ * vxe-pager分页样式 start
+ */
+::v-deep .vxe-pager{
+	background-color: transparent;
+	text-align: center;
+	color: #ffffff;
+}
+
+// 分页样式
+.vxe-input--inner,.vxe-pager--goto,.vxe-pager--jump-prev,.vxe-pager--prev-btn,.vxe-pager--next-btn,.vxe-pager--num-btn,.vxe-pager--jump-next,.vxe-select{
+	background-color: #0c1c47 !important;
+	color: rgb(225, 226, 232) !important;
+	font-size: $tr-font-size;
+	// border: solid 1px #a2d1e5;.vxe-input--inner,.vxe-pager--goto
+}
+.vxe-input--inner,.vxe-pager--goto{
+	border: none;
+}
+::v-deep .vxe-pager--num-btn.is--active{
+	border: solid 1px #307ac5 !important;
+}
+/* dialog可拖拽、拉伸 */
+[ele-movable].el-dialog__wrapper > .el-dialog > .el-dialog__header {
+  cursor: move;
+  user-select: none;
+}
+
+[ele-resizable].el-dialog__wrapper > .el-dialog {
+  display: flex;
+  flex-direction: column;
+
+  & > .el-dialog__header {
+    flex-shrink: 0;
+  }
+
+  & > .el-dialog__body {
+    flex: auto;
+    overflow: auto;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    cursor: se-resize;
+  }
+}
+
+/* dialog全屏切换 */
+::v-deep .ele-dialog-wrap-fullscreen.el-dialog {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  max-width: inherit;
+  border-radius: 0;
+
+  & > .el-dialog__header {
+    cursor: default !important;
+  }
+
+  &:after {
+    display: none;
+  }
+}
+
+// 覆盖层元素增加可穿透点击事件
+.el-dialog__wrapper{
+    pointer-events:none;
+}
+.el-dialog {
+  border-radius: 4px;
+  // 弹窗层元素不可穿透点击事件（不影响弹窗层元素的点击事件）
+  pointer-events: auto;
+  max-width: calc(100vw - 30px);
+
+  &.is-fullscreen {
+    border-radius: 0;
+    max-width: inherit;
+
+    &.ele-dialog-fullscreen {
+      display: flex;
+      flex-direction: column;
+
+      & > .el-dialog__body {
+        flex: auto;
+        overflow: auto;
+      }
+    }
+  }
+}
+
+// 详情弹窗里边的表格样式
+.krt-table-detail-wrap {
+	width: 100%;
+    max-height: 80vh;
+    overflow-y: scroll;
+	color: rgba(246, 255, 255, 0.5);
+	padding: 6px 26px;
+	@include fs-14;
+	@include flex1;
+	table {
+		width: 100%;
+		height: 100%;
+	}
+	// 详情的标题
+	.krt-detail-item-title {
+		background: rgb(22, 50, 83);
+		// font-family: MicrosoftYaHei;
+		color: $color-light-green-blue;
+
+		td {
+			padding: 20px 15px;
+		}
+	}
+
+	// 项的标题
+	.krt-detail-item-label {
+		background: rgb(24, 46, 74);
+		// font-family: MicrosoftYaHei-Bold;
+		font-weight: bold;
+		padding: 20px 15px;
+	}
+
+	// 项的内容
+	.krt-detail-item-content {
+		// font-family: MicrosoftYaHei;
+		color: $color-pale-white;
+		background: rgb(22, 50, 83);
+		padding: 20px 30px;
+		// 单张图片的宽高
+		.krt-detail-item-singe-img {
+			height: 200px;
+		}
+	}
+    .krt-detail-item-unit{
+        // font-family: MicrosoftYaHei;
+        padding: 20px 10px;
+    }
+}

@@ -1,9 +1,8 @@
 <template>
-    <div class="layout-body-total">
-        <div class="layout-panel">
-            <div>环形图</div>
-            <div @click="showOther('threePie')">环形图</div>
-            <div @click="showOther('threeMap')">地图</div>
+    <div class="layout-body-total flex-row">
+        <div class="layout-panel flex-column flex-justify-center">
+            <div class="layout-switch-btn" @click="showOther('threePie')">环形图</div>
+            <div class="layout-switch-btn" @click="showOther('threeMap')">地图</div>
         </div>
         <div class="layout-router-canvas">
             <router-view />
@@ -13,12 +12,11 @@
 <script>
 export default {
     name: "EleLayout",
-    // components: { RouterView }
+
     watch: {
         $route: {
             handler(newV, oldV) {
                 // 当前页面路由path
-                // this.curRouterPath();
                 console.log('==-=-=', newV, oldV)
             },
             // 深度观察监听
@@ -31,11 +29,13 @@ export default {
                 case 'threePie':
                     this.$router.push({
                         path: '/threePie'
-                    }); break;
+                    });
+                    break;
                 case 'threeMap':
                     this.$router.push({
                         path: '/threeMap'
-                    }); break;
+                    });
+                    break;
             }
         }
     }
@@ -46,16 +46,33 @@ export default {
 .layout-body-total {
     width: 100vw;
     height: 100vh;
-    display: flex;
-}
 
-.layout-panel {
-    width: 10vw;
-    display: flex;
-    flex-direction: column;
-}
+    .layout-panel {
+        flex: 1;
+        width: 10%;
+        height: 100%;
+        position: relative;
+        z-index: 10;
+        border-right: 1px solid #000;
+    }
 
-.layout-router-canvas {
-    width: 90vw;
+    .layout-switch-btn {
+        font-size: 16px;
+        padding: 5px 10px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: aliceblue;
+        }
+    }
+
+    .layout-router-canvas {
+        flex: 9;
+        width: 90%;
+        height: 100%;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
 }
 </style>

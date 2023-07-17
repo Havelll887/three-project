@@ -71,8 +71,7 @@ export default class lineMap {
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.25;
-        // this.renderer.outputEncoding = THREE.sRGBEncoding;
-        this.renderer.outputEncoding = THREE.sHSVEncoding;
+
         this.renderer.setPixelRatio(window.devicePixelRatio);
         // 清除背景色，透明背景
         this.renderer.setClearColor(0xffffff, 0);
@@ -128,7 +127,6 @@ export default class lineMap {
         this.setTag()
 
 
-        // this.loadFont(); // 加载字体
 
         this.loadMapData();
 
@@ -153,15 +151,6 @@ export default class lineMap {
         _this.initMap(jsonData);
     }
 
-    loadFont() { //加载中文字体
-        var loader = new THREE.FontLoader();
-        var _this = this;
-        loader.load('fonts/chinese.json', function (response) {
-            _this.font = response;
-            _this.loadMapData();
-        });
-
-    }
 
     createText(text, position) {
         var shapes = this.font.generateShapes(text, 1);
@@ -184,97 +173,85 @@ export default class lineMap {
 
         // 加载贴图材质
         const urls = [px, nx, py, ny, pz, nz];
+        chinaJson.features.forEach((elem, index) => {
+            // 定一个省份3D对象
+            const province = new THREE.Object3D();
+            // 每个的 坐标 数组
+            const coordinates = elem.geometry.coordinates;
+            const color = COLOR_ARR[index % COLOR_ARR.length]
+            // 循环坐标数组
+            coordinates.forEach(multiPolygon => {
 
-        // 绘制地图
-        new THREE.CubeTextureLoader().load(urls, function (cubeTexture) {
-            // cubeTexture.encoding = THREE.sRGBEncoding;
-            // _this.scene.background = cubeTexture;
+                multiPolygon.forEach((polygon) => {
+                    const shape = new THREE.Shape();
 
-            _this.lightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture));
+                    for (let i = 0; i < polygon.length; i++) {
+                        let [x, y] = projection(polygon[i]);
 
-
-            chinaJson.features.forEach((elem, index) => {
-                // 定一个省份3D对象
-                const province = new THREE.Object3D();
-                // 每个的 坐标 数组
-                const coordinates = elem.geometry.coordinates;
-                const color = COLOR_ARR[index % COLOR_ARR.length]
-                // 循环坐标数组
-                coordinates.forEach(multiPolygon => {
-
-                    multiPolygon.forEach((polygon) => {
-                        const shape = new THREE.Shape();
-
-                        for (let i = 0; i < polygon.length; i++) {
-                            let [x, y] = projection(polygon[i]);
-
-                            if (i === 0) {
-                                shape.moveTo(x, -y);
-                            }
-                            shape.lineTo(x, -y);
+                        if (i === 0) {
+                            shape.moveTo(x, -y);
                         }
+                        shape.lineTo(x, -y);
+                    }
 
-                        const extrudeSettings = {
-                            depth: 4,
-                            bevelEnabled: true,
-                            bevelSegments: 1,
-                            bevelThickness: 0.2
-                        };
+                    const extrudeSettings = {
+                        depth: 4,
+                        bevelEnabled: true,
+                        bevelSegments: 1,
+                        bevelThickness: 0.2
+                    };
 
-                        const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+                    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
 
-                        const material = new THREE.MeshStandardMaterial({
-                            clearcoat: 3.0,
-                            metalness: 1,
-                            color: color,
+                    const material = new THREE.MeshStandardMaterial({
+                        clearcoat: 3.0,
+                        metalness: 1,
+                        color: color,
 
-                        });
+                    });
 
-                        const material1 = new THREE.MeshStandardMaterial({
-                            clearcoat: 3.0,
-                            metalness: 1,
-                            roughness: 1,
-                            color: color,
+                    const material1 = new THREE.MeshStandardMaterial({
+                        clearcoat: 3.0,
+                        metalness: 1,
+                        roughness: 1,
+                        color: color,
 
-                        });
+                    });
 
-                        const mesh = new THREE.Mesh(geometry, [
-                            material,
-                            material1
-                        ]);
-                        if (index % 2 === 0) {
-                            mesh.scale.set(1, 1, 1.2);
-                        }
+                    const mesh = new THREE.Mesh(geometry, [
+                        material,
+                        material1
+                    ]);
+                    if (index % 2 === 0) {
+                        mesh.scale.set(1, 1, 1.2);
+                    }
 
-                        mesh.castShadow = true
-                        mesh.receiveShadow = true
-                        mesh._color = color
-                        province.add(mesh);
-
-                    })
+                    mesh.castShadow = true
+                    mesh.receiveShadow = true
+                    mesh._color = color
+                    province.add(mesh);
 
                 })
 
-                // 将geo的属性放到省份模型中
-                province.properties = elem.properties;
-                if (elem.properties.centorid) {
-                    const [x, y] = projection(elem.properties.centorid);
-                    province.properties._centroid = [x, y];
-                }
-
-                _this.map.add(province);
-
             })
 
-            _this.scene.environment = cubeTexture;
-            // 销毁贴图
-            cubeTexture.dispose();
-            _this.scene.add(_this.map);
-            // this.renderer.render();
-        }, () => { }, (e) => {
-            console.log(e)
-        });
+            // 将geo的属性放到省份模型中
+            province.properties = elem.properties;
+            if (elem.properties.centorid) {
+                const [x, y] = projection(elem.properties.centorid);
+                province.properties._centroid = [x, y];
+            }
+
+            _this.map.add(province);
+
+        })
+
+        // _this.scene.environment = cubeTexture;
+        // 销毁贴图
+        // cubeTexture.dispose();
+        _this.scene.add(_this.map);
+
 
     }
 
