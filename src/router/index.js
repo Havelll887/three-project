@@ -10,11 +10,6 @@ const routes = [
         component: EleLayout,
         children: [
             {
-                path: '/threePie',
-                name: 'threePie',
-                component: () => import('@/views/chartsDemo/threePie.vue')
-            },
-            {
                 path: '/threeMap',
                 name: 'threeMap',
                 component: () => import('@/views/mapDemo/threeMap.vue')

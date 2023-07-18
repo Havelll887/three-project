@@ -5,6 +5,7 @@
 </template>
 <script>
 import pie from "./src/js/pie"
+import { tempData } from "./src/data/index"
 export default {
     name: 'threePie',
     data() {
@@ -14,7 +15,7 @@ export default {
     },
     mounted() {
         let canvas = document.getElementById('three3dPie')
-        this.threePie = new pie(canvas)
+        this.threePie = new pie(canvas, tempData)
     },
     beforeDestroy() {
         // 图形销毁

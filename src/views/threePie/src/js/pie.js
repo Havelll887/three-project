@@ -10,31 +10,9 @@ import { allLights } from "@/three/light/index.js"
 // 场景辅助引入
 import { allHelper } from '@/three/helpers/index.js'
 
-// 临时数据
-const tempData = [
-    {
-        color: '#3b82f6',
-        height: 0.5,
-        value: 1.5,
-    },
-    {
-        color: '#f43f5e',
-        height: 0.5,
-        value: 0.8,
-    },
-    {
-        color: '#f97316',
-        height: 0.5,
-        value: 1,
-    },
-    {
-        color: '#22c55e',
-        height: 0.5,
-        value: 0.3,
-    },
-]
+
 export default class initPie {
-    constructor(canvas) {
+    constructor(canvas, data) {
         // 实例化场景
         this.pie = new ThreeInit(canvas)
 
@@ -48,16 +26,21 @@ export default class initPie {
         this.pie.scene.add(groupPie)
 
         // 添加svg对象
-        this.addSvg(groupPie)
+        console.log('!@@', data)
+        this.addSvg(groupPie, data)
 
         this.pie.addObject(...allLights)  // 添加光线
         this.pie.addObject(...allHelper)   // 添加辅助
+
+        // 鼠标事件添加
+        this.mouseEvent(groupPie)
+        // console.log('!!', this.pie)
     }
 
     // 添加svg构建对象至场景种
-    addSvg(groupPie) {
-        const { pieSvgDataUri } = this.initSvgPie();
-        this.loadSvgPie(groupPie, pieSvgDataUri);
+    addSvg(groupPie, data) {
+        const { pieSvgDataUri } = this.initSvgPie(data);
+        this.loadSvgPie(groupPie, pieSvgDataUri, data);
     }
 
     // 获取pie的svg数据
@@ -83,15 +66,15 @@ export default class initPie {
         return { pieSvgDataUri, arcs, arcGenerator };
     }
     // 初始化svg对象
-    initSvgPie() {
-        const { pieSvgDataUri, arcs, arcGenerator } = this.makePie(tempData)
+    initSvgPie(data) {
+        const { pieSvgDataUri, arcs, arcGenerator } = this.makePie(data)
         arcs.forEach(ele => {
             ele.path = arcGenerator(ele)
         })
         return { pieSvgDataUri };
     }
     // 构建材质并添加对象
-    loadSvgPie(group, pieSvgDataUri) {
+    loadSvgPie(group, pieSvgDataUri, data) {
         const loadedr = new SVGLoader();
         loadedr.load(pieSvgDataUri, (loadedSvgData) => {
             const shapes = loadedSvgData.paths.map((shapePath) => shapePath.toShapes())
@@ -107,9 +90,9 @@ export default class initPie {
                     bevelSegments: 1,
                 });
                 const material = new THREE.MeshStandardMaterial({
-                    color: tempData[i].color,
-                    roughness: 0.5,
-                    metalness: 0.5
+                    color: data[i].color,
+                    roughness: 0.3,
+                    metalness: 0.3
                 });
                 const mesh = new THREE.Mesh(shape3d, material);
                 mesh.rotateX(-Math.PI / 2);//绕x轴旋转π/4
@@ -118,8 +101,62 @@ export default class initPie {
             }
         })
     }
+
+    // 鼠标事件
+    mouseEvent(group) {
+        /**
+         * 光线投射，发射一个特定方向的射线，来检测是否有物体与这个射线相交
+         * 
+         * 检测物体是否在鼠标后面：发射一个从相机位置到鼠标方向的射线
+         * */
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+        let selectedObject = null;
+        // 鼠标移动事件
+        const onPointerMove = (event) => {
+            if (selectedObject) {
+                selectedObject.scale.set(1, 1, 1)
+                selectedObject = null;
+            }
+
+            pointer.x = (event.layerX / window.innerWidth) * 2 - 1;
+            pointer.y = - (event.layerY / window.innerHeight) * 2 + 1;
+            /**
+             * .setFromCamera ( coords : Vector2, camera : Camera ) 
+             * coords —— 在标准化设备坐标中鼠标的二维坐标 —— X分量与Y分量应当在-1到1之间。
+             * camera —— 射线所来源的摄像机
+             * */
+            raycaster.setFromCamera(pointer, this.pie.camera);
+
+            // 添加检测对象数组
+            const intersects = raycaster.intersectObject(group, true);
+
+            if (intersects.length > 0) {
+                const res = intersects.filter(function (res) {
+                    return res && res.object;
+                })[0];
+                if (res && res.object) {
+                    selectedObject = res.object;
+                    selectedObject.scale.set(2, 2, 2)
+                }
+            }
+        }
+        // 监听鼠标移动事件
+        document.addEventListener('pointermove', onPointerMove);
+
+
+
+    }
+
     // 对象销毁
     destroyed() {
         console.log('!@@', this.pie)
+        // if (this.renderer) {
+        //     this.renderer.forceContextLoss()
+        //     this.renderer.dispose()
+        //     this.renderer.domElement = null
+        //     this.renderer = null
+        // }
+        // window.removeEventListener('resize', this.resizeEventHandle)
     }
 }
