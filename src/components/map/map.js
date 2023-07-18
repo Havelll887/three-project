@@ -8,12 +8,7 @@ import { CSM } from 'three/examples/jsm/csm/CSM.js';
 import { CSMHelper } from 'three/examples/jsm/csm/CSMHelper.js';
 
 
-import px from './textures/cube/px.png'
-import py from './textures/cube/py.png'
-import pz from './textures/cube/pz.png'
-import nx from './textures/cube/nx.png'
-import ny from './textures/cube/ny.png'
-import nz from './textures/cube/nz.png'
+
 
 import tag from './textures/tag.png'
 
@@ -171,8 +166,7 @@ export default class lineMap {
 
         let _this = this;
 
-        // 加载贴图材质
-        const urls = [px, nx, py, ny, pz, nz];
+
         chinaJson.features.forEach((elem, index) => {
             // 定一个省份3D对象
             const province = new THREE.Object3D();

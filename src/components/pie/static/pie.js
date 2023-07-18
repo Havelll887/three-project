@@ -73,7 +73,7 @@ export function addGeoObject(group, svgObject, pieSvgDataUri) {
                 steps: 2,
                 depth: 1,
                 bevelEnabled: true,
-                bevelThickness: 0.01,
+                bevelThickness: 0.05,
                 bevelSize: 0.01,
                 bevelOffset: 0.0,
                 bevelSegments: 1,

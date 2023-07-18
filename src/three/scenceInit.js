@@ -12,8 +12,8 @@ export class ThreeEngine {
             antialias: true, // 开启抗锯齿
         });
         container.appendChild(renderer.domElement); // 将渲染器挂载到dom
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(container.offsetWidth, container.offsetHeight, true);
+        // renderer.setPixelRatio(window.devicePixelRatio);
+        // renderer.setSize(container.offsetWidth, container.offsetHeight, true);
         let scene = new Scene(); // 实例化场景
         // 实例化相机
         let camera = new PerspectiveCamera(
@@ -47,46 +47,46 @@ export class ThreeEngine {
 
         renderer.render(scene, camera); // 渲染器渲染场景和相机
         renderer.setClearColor(0x1f2937, 1); //设置背景颜色
-        let onWindowResize = () => {
-            // console.log('dede',window)
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-        window.addEventListener("resize", onWindowResize);
+        // let onWindowResize = () => {
+        //     // console.log('dede',window)
+        //     camera.aspect = window.innerWidth / window.innerHeight;
+        //     camera.updateProjectionMatrix();
+        //     renderer.setSize(window.innerWidth, window.innerHeight);
+        // };
+        // window.addEventListener("resize", onWindowResize);
 
-        let onPointerMove = (event) => {
+        // let onPointerMove = (event) => {
 
 
-            if (selectedObject) {
+        //     if (selectedObject) {
 
-                selectedObject.scale.set(1, 1, 1)
-                selectedObject = null;
-            }
+        //         selectedObject.scale.set(1, 1, 1)
+        //         selectedObject = null;
+        //     }
 
-            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-            pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        //     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        //     pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
-            raycaster.setFromCamera(pointer, camera);
+        //     raycaster.setFromCamera(pointer, camera);
 
-            const intersects = raycaster.intersectObject(group, true);
+        //     const intersects = raycaster.intersectObject(group, true);
 
-            if (intersects.length > 0) {
+        //     if (intersects.length > 0) {
 
-                const res = intersects.filter(function (res) {
-                    return res && res.object;
-                })[0];
+        //         const res = intersects.filter(function (res) {
+        //             return res && res.object;
+        //         })[0];
 
-                if (res && res.object) {
-                    console.log('dedede', res)
+        //         if (res && res.object) {
+        //             // console.log('dedede', res)
 
-                    selectedObject = res.object;
-                    selectedObject.scale.set(2, 2, 2)
+        //             selectedObject = res.object;
+        //             selectedObject.scale.set(2, 2, 2)
 
-                }
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
         document.addEventListener('pointermove', onPointerMove);
 
@@ -94,7 +94,7 @@ export class ThreeEngine {
         let animate = () => {
             renderer.render(scene, camera); // 渲染器渲染场景和相机
             requestAnimationFrame(animate);
-            stats.update();
+            // stats.update();
         };
         animate();
     }

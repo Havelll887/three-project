@@ -20,9 +20,14 @@ const routes = [
                 component: () => import('@/views/mapDemo/threeMap.vue')
             },
             {
-                path: 'map',
+                path: '/map',
                 name: 'map',
                 component: () => import('@/views/threeMap/index.vue')
+            },
+            {
+                path: '/pie',
+                name: 'pie',
+                component: () => import('@/views/threePie/index.vue')
             }
         ]
     },

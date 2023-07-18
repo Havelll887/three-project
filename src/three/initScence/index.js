@@ -2,45 +2,52 @@ import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export default class ThreeInit {
-    constructor(canvas) {
+    constructor(
+        canvas,
+        camera = {
+
+        }
+    ) {
         // 渲染器
         this.renderer = new THREE.WebGLRenderer({
             canvas,
             antialias: true, // 开启抗锯齿
         });
-
         // 设置像素比，
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.shadowMap.enabled = true; // 开启阴影
+        // this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        // this.renderer.setSize(window.innerWidth, window.innerHeight, true);
+
+        // this.renderer.shadowMap.enabled = true; // 开启阴影
         /**
          * 阴影类型 - PCFSoftShadowMap
          * Percentage-Closer Filtering (PCF) 算法过滤阴影映射
          */
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        // this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         /**
          * 色调映射 tone mapping
          * 曝光度 toneMappingExposure  
         */
-        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        this.renderer.toneMappingExposure = 1.25;
+        // this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        // this.renderer.toneMappingExposure = 1;
+
         // 场景
         this.scene = new THREE.Scene();
         // 相机
         this.camera = new THREE.PerspectiveCamera(
-            90,
+            45,
             canvas.width / canvas.height,
             0.1,
-            1000
+            5000
         );
-        this.camera.position.set(0, 0, 5.5);
+        this.camera.position.set(0, -40, 70);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0)); // 设置相机看先中心点
-        this.camera.up = new THREE.Vector3(0, 1, 0); // 设置相机自身方向
+        // this.camera.up = new THREE.Vector3(0, 1, 0); // 设置相机自身方向
+        // 手动更新相机的投影矩阵
         this.camera.updateProjectionMatrix();  // 更新相机矩阵
 
         // 窗口变化监听
-        window.addEventListener("resize", this.winResize);
+        window.addEventListener("resize", this.winResize(this.camera, this.renderer));
         // 鼠标移动事件
         document.addEventListener('pointermove', this.onPointerMove);
         //设置背景颜色
@@ -50,6 +57,7 @@ export default class ThreeInit {
         // 控制器
         this.setController()
         // this.setRaycaster()
+
     }
 
     // 设置控制器
@@ -59,13 +67,14 @@ export default class ThreeInit {
     }
 
     // 窗口边界变化
-    winResize() {
+    winResize(camera, renderer) {
         // update camera
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-        this.camera.updateProjectionMatrix();
+        camera.aspect = window.innerWidth / window.innerHeight;
+        // 手动更新相机的投影矩阵
+        camera.updateProjectionMatrix();
         // update renderer
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     }
 
     // 连续渲染

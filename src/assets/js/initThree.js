@@ -79,7 +79,7 @@ export class ThreeEngine {
                 })[0];
 
                 if (res && res.object) {
-                    console.log('dedede', res)
+                    // console.log('dedede', res)
 
                     selectedObject = res.object;
                     selectedObject.scale.set(2, 2, 2)

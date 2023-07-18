@@ -1,24 +1,24 @@
 <template>
     <div class="three-map-container">
-        <canvas id="three3dMap"></canvas>
+        <canvas id="three3dPie"></canvas>
     </div>
 </template>
 <script>
-import initMap from "./src/js/map"
+import pie from "./src/js/pie"
 export default {
-    name: 'threeMap',
+    name: 'threePie',
     data() {
         return {
-            threeMap: null
+            threePie: null
         }
     },
     mounted() {
-        let canvas = document.getElementById('three3dMap')
-        this.threeMap = new initMap(canvas)
+        let canvas = document.getElementById('three3dPie')
+        this.threePie = new pie(canvas)
     },
     beforeDestroy() {
         // 图形销毁
-        this.threeMap.destroyed()
+        this.threePie.destroyed()
     }
 }
 </script>
