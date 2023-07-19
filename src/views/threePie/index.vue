@@ -1,10 +1,10 @@
 <template>
-    <div class="three-map-container">
+    <div class="three-pie-container">
         <canvas id="three3dPie"></canvas>
     </div>
 </template>
 <script>
-import pie from "./src/js/pie"
+import Pie from "./src/js/pie"
 import { tempData } from "./src/data/index"
 export default {
     name: 'threePie',
@@ -15,7 +15,7 @@ export default {
     },
     mounted() {
         let canvas = document.getElementById('three3dPie')
-        this.threePie = new pie(canvas, tempData)
+        this.threePie = new Pie(canvas, tempData)
     },
     beforeDestroy() {
         // 图形销毁
@@ -24,7 +24,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.three-map-container {
+.three-pie-container {
     width: 100%;
     height: 100%;
 }

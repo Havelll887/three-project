@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import initMap from "./src/js/map"
+import InitMap from "./src/js/map"
 export default {
     name: 'threeMap',
     data() {
@@ -14,7 +14,7 @@ export default {
     },
     mounted() {
         let canvas = document.getElementById('three3dMap')
-        this.threeMap = new initMap(canvas)
+        this.threeMap = new InitMap(canvas)
     },
     beforeDestroy() {
         // 图形销毁

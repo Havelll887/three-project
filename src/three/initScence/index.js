@@ -4,9 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 export default class ThreeInit {
     constructor(
         canvas,
-        camera = {
+        controller,
 
-        }
     ) {
         // 渲染器
         this.renderer = new THREE.WebGLRenderer({
@@ -52,12 +51,14 @@ export default class ThreeInit {
         document.addEventListener('pointermove', this.onPointerMove);
         //设置背景颜色
         this.renderer.setClearColor(0x1f2937, 1);
+
         // 渲染
         this.animate();
-        // 控制器
-        this.setController()
-        // this.setRaycaster()
 
+        if (controller) {
+            // 控制器
+            this.setController()
+        }
     }
 
     // 设置控制器
@@ -94,38 +95,4 @@ export default class ThreeInit {
         });
     }
 
-    // 鼠标移动事件
-    onPointerMove() {
-
-    }
-
-    // 鼠标
-    setRaycaster() {
-        this.raycaster = new THREE.Raycaster();
-        this.mouse = new THREE.Vector2();
-        this.eventOffset = {};
-        const _this = this
-        function onMouseMove(event) {
-            // let { top, left, width, height } = _this.can.getBoundingClientRect()
-            let clientX = event.clientX
-            let clientY = event.clientY
-
-            // _this.mouse.x = (clientX / width) * 2 - 1;
-            // _this.mouse.y = -(clientY / height) * 2 + 1;
-
-            _this.mouse.x = clientX;
-            _this.mouse.y = clientY;
-
-            // _this.eventOffset.x = clientX;
-            // _this.eventOffset.y = clientY;
-            // _this.provinceInfo.style.left = _this.eventOffset.x + 10 + 'px';
-            // _this.provinceInfo.style.top = _this.eventOffset.y - 20 + 'px';
-            console.log('!@@!@!1223', event)
-        }
-        window.addEventListener('mousemove', onMouseMove, false);
-
-        // const onMouseMove = (event) = >{
-        // document.addEventListener('pointermove', onPointerMove);
-        // }
-    }
 }

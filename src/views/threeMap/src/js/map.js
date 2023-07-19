@@ -11,9 +11,9 @@ const HIGHT_COLOR = '#ffff00'
 
 // 墨卡托投影转换
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
-export default class initMap {
+export default class InitMap {
     constructor(canvas) {
-        this.initMap = new ThreeInit(canvas)
+        this.initMap = new ThreeInit(canvas, true)
         // 加载json数据
         this.loadMapData()
     }

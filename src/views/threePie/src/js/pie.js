@@ -11,10 +11,10 @@ import { allLights } from "@/three/light/index.js"
 import { allHelper } from '@/three/helpers/index.js'
 
 
-export default class initPie {
+export default class InitPie {
     constructor(canvas, data) {
         // 实例化场景
-        this.pie = new ThreeInit(canvas)
+        this.pie = new ThreeInit(canvas, true)
 
         // 重新设置相机位置
         this.pie.camera.position.set(6, 6, 8); // 设置相机位置
@@ -137,15 +137,12 @@ export default class initPie {
                 })[0];
                 if (res && res.object) {
                     selectedObject = res.object;
-                    selectedObject.scale.set(2, 2, 2)
+                    selectedObject.scale.set(1, 1, 2)
                 }
             }
         }
         // 监听鼠标移动事件
         document.addEventListener('pointermove', onPointerMove);
-
-
-
     }
 
     // 对象销毁

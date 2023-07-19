@@ -23,6 +23,16 @@ const routes = [
                 path: '/pie',
                 name: 'pie',
                 component: () => import('@/views/threePie/index.vue')
+            },
+            {
+                path: '/fake3d',
+                name: 'fake3d',
+                component: () => import('@/views/threeFake3d/index.vue')
+            },
+            {
+                path: '/gltf',
+                name: 'gltf',
+                component: () => import('@/views/threeModel/index.vue')
             }
         ]
     },

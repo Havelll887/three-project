@@ -3,8 +3,8 @@
         <div class="layout-panel flex-column flex-justify-center">
             <div class="layout-switch-btn" @click="showOther('threePie')">环形图</div>
             <div class="layout-switch-btn" @click="showOther('threeMap')">地图</div>
-            <div class="layout-switch-btn" @click="showOther('threeMap')">单张图片伪3d</div>
-            <div class="layout-switch-btn" @click="showOther('threeMap')">gltf模型</div>
+            <div class="layout-switch-btn" @click="showOther('threeFake3d')">单张图片伪3d</div>
+            <div class="layout-switch-btn" @click="showOther('threeGltf')">gltf模型</div>
         </div>
         <div class="layout-router-canvas">
             <router-view />
@@ -28,16 +28,10 @@ export default {
     methods: {
         showOther(type) {
             switch (type) {
-                case 'threePie':
-                    this.$router.push({
-                        path: '/pie'
-                    });
-                    break;
-                case 'threeMap':
-                    this.$router.push({
-                        path: '/map'
-                    });
-                    break;
+                case 'threePie': this.$router.push({ path: '/pie' }); break;
+                case 'threeMap': this.$router.push({ path: '/map' }); break;
+                case 'threeFake3d': this.$router.push({ path: '/fake3d' }); break;
+                case 'threeGltf': this.$router.push({ path: '/gltf' }); break;
             }
         }
     }
