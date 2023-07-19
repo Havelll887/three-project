@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 export default class ThreeInit {
     constructor(
         canvas,
-        controller,
+        controller = true,
 
     ) {
         // 渲染器

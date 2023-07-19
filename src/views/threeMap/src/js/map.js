@@ -150,12 +150,12 @@ export default class InitMap {
     }
     // 图形销毁
     destroyed() {
-        if (this.initMap.renderer) {
-            this.initMap.renderer.forceContextLoss()
-            this.initMap.renderer.dispose()
-            this.initMap.renderer.domElement = null
-            this.initMap.renderer = null
-        }
+        // if (this.initMap.renderer) {
+        //     this.initMap.renderer.forceContextLoss()
+        //     this.initMap.renderer.dispose()
+        //     this.initMap.renderer.domElement = null
+        //     this.initMap.renderer = null
+        // }
         // window.removeEventListener('resize', this.initMap.winResize)
     }
 }

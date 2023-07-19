@@ -32,7 +32,7 @@ const routes = [
             {
                 path: '/gltf',
                 name: 'gltf',
-                component: () => import('@/views/threeModel/index.vue')
+                component: () => import('@/views/threeGLTF/index.vue')
             }
         ]
     },

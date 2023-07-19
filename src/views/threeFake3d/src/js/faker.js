@@ -21,6 +21,7 @@ export default class FakePic {
         // 添加平面
         this.addPlane(data.img, data.imgDep)
 
+        // 鼠标移动监听
         window.addEventListener("mousemove", (event) => {
             this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -58,8 +59,8 @@ export default class FakePic {
                   vec4 color = texture2D(uTexture, vUv);
                   vec4 depth = texture2D(uDepthTexture, vUv);
                   float depthValue = depth.r;
-                  float x = vUv.x + (uMouse.x)*0.01*depthValue;
-                  float y = vUv.y + (uMouse.y)*0.01*depthValue;
+                  float x = vUv.x + (uMouse.x) * 0.01 * depthValue;
+                  float y = vUv.y + (uMouse.y) * 0.01 * depthValue;
                   vec4 newColor = texture2D(uTexture, vec2(x, y));
                   gl_FragColor = newColor;
                 }
