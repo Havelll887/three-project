@@ -148,12 +148,12 @@ export default class InitPie {
     // 对象销毁
     destroyed() {
         console.log('!@@', this.pie)
-        // if (this.renderer) {
-        //     this.renderer.forceContextLoss()
-        //     this.renderer.dispose()
-        //     this.renderer.domElement = null
-        //     this.renderer = null
-        // }
+        if (this.pie.renderer) {
+            this.pie.renderer.forceContextLoss()
+            this.pie.renderer.dispose()
+            this.pie.renderer.domElement = null
+            this.pie.renderer = null
+        }
         // window.removeEventListener('resize', this.resizeEventHandle)
     }
 }

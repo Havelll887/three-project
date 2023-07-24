@@ -25,6 +25,7 @@ export default class FakePic {
         window.addEventListener("mousemove", (event) => {
             this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            // this.moveByPoints(event)
         });
     }
 
@@ -69,12 +70,36 @@ export default class FakePic {
         return material
     }
 
+    // 摄像机随鼠标移动增加3d效果
+    // moveByPoints(mouseEvent) {
+    //     let x = mouseEvent.clientX - window.innerWidth / 2
+    //     let y = mouseEvent.clientY - window.innerHeight / 2;
+    //     // mouseX = ( event.clientX - windowHalfX );
+    //     // mouseY = ( event.clientY - windowHalfY );
+    //     this.fakePic.camera.position.x += (this.mouse.x - this.fakePic.camera.position.x) * 0.05;
+    //     this.fakePic.camera.position.y += (- this.mouse.y - this.fakePic.camera.position.y) * 0.05;
+    //     this.fakePic.camera.lookAt(this.fakePic.scene.position);
+
+    //     this.fakePic.renderer.render(this.fakePic.scene, this.fakePic.camera);
+    // }
 
     // 添加平面
     addPlane(img, imgDep) {
         const geo = new THREE.PlaneGeometry(19.2, 12);
         const plane = new THREE.Mesh(geo, this.loadMaterial(img, imgDep));
         this.fakePic.scene.add(plane);
+    }
+
+    // 对象销毁
+    destroyed() {
+        console.log('!@@', this.pie)
+        if (this.fakePic.renderer) {
+            this.fakePic.renderer.forceContextLoss()
+            this.fakePic.renderer.dispose()
+            this.fakePic.renderer.domElement = null
+            this.fakePic.renderer = null
+        }
+        // window.removeEventListener('resize', this.resizeEventHandle)
     }
 
 }

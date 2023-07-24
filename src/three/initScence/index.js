@@ -48,7 +48,7 @@ export default class ThreeInit {
         // 窗口变化监听
         window.addEventListener("resize", this.winResize(this.camera, this.renderer));
         // 鼠标移动事件
-        document.addEventListener('pointermove', this.onPointerMove);
+        // document.addEventListener('pointermove', this.onPointerMove);
         //设置背景颜色
         this.renderer.setClearColor(0x1f2937, 1);
 
@@ -80,6 +80,7 @@ export default class ThreeInit {
 
     // 连续渲染
     animate() {
+        if (!this.renderer) return
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(() => {
             this.animate();
