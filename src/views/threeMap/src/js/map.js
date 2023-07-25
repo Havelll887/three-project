@@ -11,11 +11,13 @@ const HIGHT_COLOR = '#ffff00'
 
 // 墨卡托投影转换
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
+
 export default class InitMap {
     constructor(canvas) {
         this.initMap = new ThreeInit(canvas, true)
         // 加载json数据
         this.loadMapData()
+        this.setLight()
     }
     loadMapData() {
         let jsonData = require('@/views/threeMap/src/json/china.json')
@@ -53,7 +55,7 @@ export default class InitMap {
                         // bevelThickness: 0.2,
                         curveSegments: 256,
                         steps: 2,
-                        depth: 1,
+                        depth: 3,
                         bevelEnabled: true,
                         bevelThickness: 0.01,
                         bevelSize: 0.01,
@@ -150,12 +152,12 @@ export default class InitMap {
     }
     // 图形销毁
     destroyed() {
-        // if (this.initMap.renderer) {
-        //     this.initMap.renderer.forceContextLoss()
-        //     this.initMap.renderer.dispose()
-        //     this.initMap.renderer.domElement = null
-        //     this.initMap.renderer = null
-        // }
+        if (this.initMap.renderer) {
+            this.initMap.renderer.forceContextLoss()
+            this.initMap.renderer.dispose()
+            this.initMap.renderer.domElement = null
+            this.initMap.renderer = null
+        }
         // window.removeEventListener('resize', this.initMap.winResize)
     }
 }

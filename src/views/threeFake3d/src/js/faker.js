@@ -92,7 +92,6 @@ export default class FakePic {
 
     // 对象销毁
     destroyed() {
-        console.log('!@@', this.pie)
         if (this.fakePic.renderer) {
             this.fakePic.renderer.forceContextLoss()
             this.fakePic.renderer.dispose()

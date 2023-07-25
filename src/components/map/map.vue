@@ -22,7 +22,7 @@ export default {
     },
     watch: {
         tagData(v) {
-            this.mapObj.setTag(v)
+            // this.mapObj.setTag(v)
         }
     },
     mounted() {

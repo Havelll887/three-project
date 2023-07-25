@@ -26,7 +26,6 @@ export default class InitPie {
         this.pie.scene.add(groupPie)
 
         // 添加svg对象
-        console.log('!@@', data)
         this.addSvg(groupPie, data)
 
         this.pie.addObject(...allLights)  // 添加光线
@@ -147,7 +146,6 @@ export default class InitPie {
 
     // 对象销毁
     destroyed() {
-        console.log('!@@', this.pie)
         if (this.pie.renderer) {
             this.pie.renderer.forceContextLoss()
             this.pie.renderer.dispose()

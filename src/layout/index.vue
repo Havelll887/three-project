@@ -16,14 +16,14 @@ export default {
     name: "EleLayout",
 
     watch: {
-        $route: {
-            handler(newV, oldV) {
-                // 当前页面路由path
-                console.log('==-=-=', newV, oldV)
-            },
-            // 深度观察监听
-            deep: true
-        }
+        // $route: {
+        //     handler(newV, oldV) {
+        //         // 当前页面路由path
+        //         console.log('==-=-=', newV, oldV)
+        //     },
+        //     // 深度观察监听
+        //     deep: true
+        // }
     },
     methods: {
         showOther(type) {

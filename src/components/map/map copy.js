@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import * as d3 from "d3";
-// import TWEEN from '@tweenjs/tween.js'
+import TWEEN from '@tweenjs/tween.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { LightProbeGenerator } from 'three/examples/jsm/lights/LightProbeGenerator.js';
 
@@ -110,11 +110,23 @@ export default class lineMap {
 
 
         this.setController(); // 设置控制
+
         this.setLight(); // 设置灯光
+
+        this.setRaycaster();
+
+        this.setPlayGround()
+
         this.animate();
+
+        this.setTag()
+
 
 
         this.loadMapData();
+
+
+
     }
 
 
@@ -229,8 +241,148 @@ export default class lineMap {
 
     }
 
+    // 绘制标注
+    setTag(_data = []) {
+        if (!_data || _data.length === 0) {
+            return
+        }
 
+        this.scene.remove(this.group)
+        this.group = new THREE.Object3D();
 
+        function paintTag(scale = 1) {
+            let spriteMap = new THREE.TextureLoader().load(tag);
+
+            _data.forEach(d => {
+                // 必须是不同的材质，否则鼠标移入时，修改材质会全部都修改
+                let spriteMaterial = new THREE.SpriteMaterial({ map: spriteMap, color: 0xffffff });
+                const { value } = d
+                // 添加标点
+                const sprite1 = new THREE.Sprite(spriteMaterial);
+
+                if (value && value.length !== 0) {
+                    let [x, y] = projection(value)
+                    sprite1.position.set(x, -y + 2, 6);
+                }
+                sprite1._data = d
+                sprite1.scale.set(2 * scale, 3 * scale, 8 * scale);
+
+                this.group.add(sprite1)
+            })
+            spriteMap.dispose()
+        }
+
+        function setScale(scale = 1) {
+            this.group.children.forEach(s => {
+                s.scale.set(2 * scale, 3 * scale, 8 * scale);
+            })
+        }
+
+        this.scene.add(this.group)
+
+        paintTag.call(this, 0.1)
+
+        let tween = new TWEEN.Tween({ val: 0.1 })
+            .to(
+                {
+                    val: 1.2
+                },
+                1.5 * 1000
+            )
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate((d) => {//高度增加动画
+                setScale.call(this, d.val)
+            })
+        tween.start()
+
+        if (this.raycaster) {
+            this.raycaster.setFromCamera(this.mouse, this.camera);
+        }
+        this.renderer.render(this.scene, this.camera);
+        console.log('render info', this.renderer.info)
+        // TWEEN.update()
+    }
+
+    setRaycaster() {
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+        this.eventOffset = {};
+        var _this = this;
+
+        function onMouseMove(event) {
+            // 父级并非满屏，所以需要减去父级的left 和 top
+            let { top, left, width, height } = _this.container.getBoundingClientRect()
+            let clientX = event.clientX - left
+            let clientY = event.clientY - top
+
+            _this.mouse.x = (clientX / width) * 2 - 1;
+            _this.mouse.y = -(clientY / height) * 2 + 1;
+
+            _this.eventOffset.x = clientX;
+            _this.eventOffset.y = clientY;
+            _this.provinceInfo.style.left = _this.eventOffset.x + 10 + 'px';
+            _this.provinceInfo.style.top = _this.eventOffset.y - 20 + 'px';
+        }
+
+        // 标注
+        function onPointerMove() {
+            if (_this.selectedObject) {
+                _this.selectedObject.material.color.set(0xffffff);
+                _this.selectedObject = null;
+            }
+
+            if (_this.raycaster) {
+                const intersects = _this.raycaster.intersectObject(_this.group, true);
+                // console.log('select group', intersects)
+                if (intersects.length > 0) {
+                    const res = intersects.filter(function (res) {
+
+                        return res && res.object;
+
+                    })[intersects.length - 1];
+
+                    if (res && res.object) {
+                        _this.selectedObject = res.object;
+                        _this.selectedObject.material.color.set('#f00');
+
+                    }
+                }
+            }
+        }
+
+        // 标注点击
+        function onClick() {
+            if (_this.selectedObject) {
+                // 输出标注信息
+                console.log(_this.selectedObject._data)
+                _this.tagClick(_this.selectedObject._data)
+            }
+        }
+        window.addEventListener('mousemove', onMouseMove, false);
+        document.addEventListener('pointermove', onPointerMove);
+        document.addEventListener('click', onClick);
+    }
+
+    // // 绘制地面
+
+    setPlayGround() {
+        const groundMaterial = new THREE.MeshStandardMaterial({
+            color: 0x031837,
+            // specular: 0x111111,
+            metalness: 0,
+            roughness: 1,
+            // opacity: 0.2,
+            opacity: 0.5,
+            transparent: true,
+        });
+        const ground = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000, 1, 1), groundMaterial);
+        // ground.rotation.x = - Math.PI / 2;
+        ground.position.z = 0
+        // ground.castShadow = true;
+        ground.receiveShadow = true;
+
+        this.scene.add(ground);
+    }
 
     setLight() {
         let ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // 环境光
@@ -296,44 +448,55 @@ export default class lineMap {
 
     animate() {
         requestAnimationFrame(this.animate.bind(this));
-        // if (this.raycaster) {
-        //     this.raycaster.setFromCamera(this.mouse, this.camera);
+        if (this.raycaster) {
+            this.raycaster.setFromCamera(this.mouse, this.camera);
 
-        //     // calculate objects intersecting the picking ray
-        //     var intersects = this.raycaster.intersectObjects(this.scene.children, true);
-        //     if (this.activeInstersect && this.activeInstersect.length > 0) { // 将上一次选中的恢复颜色
-        //         this.activeInstersect.forEach(element => {
-        //             const { object } = element
-        //             const { _color, material } = object
-        //             material[0].color.set(_color);
-        //             material[1].color.set(_color);
-        //         });
-        //     }
+            // calculate objects intersecting the picking ray
+            var intersects = this.raycaster.intersectObjects(this.scene.children, true);
+            if (this.activeInstersect && this.activeInstersect.length > 0) { // 将上一次选中的恢复颜色
+                this.activeInstersect.forEach(element => {
+                    const { object } = element
+                    const { _color, material } = object
+                    material[0].color.set(_color);
+                    material[1].color.set(_color);
+                });
+            }
 
-        //     this.activeInstersect = []; // 设置为空
-        //     // console.log('select', intersects)
-        //     for (var i = 0; i < intersects.length; i++) {
-        //         // debugger;
-        //         if (intersects[i].object.material && intersects[i].object.material.length === 2) {
-        //             this.activeInstersect.push(intersects[i]);
-        //             intersects[i].object.material[0].color.set(HIGHT_COLOR);
-        //             intersects[i].object.material[1].color.set(HIGHT_COLOR);
-        //             break; // 只取第一个
-        //         }
-        //     }
-        // }
-
+            this.activeInstersect = []; // 设置为空
+            // console.log('select', intersects)
+            for (var i = 0; i < intersects.length; i++) {
+                // debugger;
+                if (intersects[i].object.material && intersects[i].object.material.length === 2) {
+                    this.activeInstersect.push(intersects[i]);
+                    intersects[i].object.material[0].color.set(HIGHT_COLOR);
+                    intersects[i].object.material[1].color.set(HIGHT_COLOR);
+                    break; // 只取第一个
+                }
+            }
+        }
+        this.createProvinceInfo();
         this.camera.updateMatrixWorld();
-        // this.csm.update();
-        // this.controller.update();
+        this.csm.update();
+        this.controller.update();
         // csmHelper.update();
         if (!this.renderer) {
             this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         }
         this.renderer.render(this.scene, this.camera);
-        // TWEEN.update()
+        TWEEN.update()
     }
 
+    createProvinceInfo() { // 显示省份的信息      
+        if (this.activeInstersect.length !== 0 && this.activeInstersect[0].object.parent.properties.name) {
+            var properties = this.activeInstersect[0].object.parent.properties;
+
+            this.provinceInfo.textContent = properties.name;
+
+            this.provinceInfo.style.visibility = 'visible';
+        } else {
+            this.provinceInfo.style.visibility = 'hidden';
+        }
+    }
 
     // 丢失 context
     destroyed() {

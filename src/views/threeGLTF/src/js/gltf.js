@@ -59,6 +59,7 @@ export default class MachineRoom {
                 map: this.initTexture(map.name, baseUrl),
             })
         } else {
+            console.log('==-', color)
             obj.material = new THREE.MeshBasicMaterial({ color });
         }
     }
@@ -111,7 +112,6 @@ export default class MachineRoom {
 
     // 对象销毁
     destroyed() {
-        // console.log('!@@', this.pie)
         if (this.machineRoom.renderer) {
             this.machineRoom.renderer.forceContextLoss()
             this.machineRoom.renderer.dispose()
