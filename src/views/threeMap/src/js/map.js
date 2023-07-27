@@ -6,17 +6,20 @@ import ThreeInit from "@/three/initScence/index.js"
 
 // 颜色数组
 const COLOR_ARR = ['#e83c62', '#ab2385', '#214897', '#f5d1b9', '#ff914b', '#d25131']
+
 // 高亮颜色
 const HIGHT_COLOR = '#ffff00'
 
 // 墨卡托投影转换
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
 
+
 export default class InitMap {
     constructor(canvas) {
         this.initMap = new ThreeInit(canvas, true)
         // 加载json数据
         this.loadMapData()
+        // 
         this.setLight()
     }
     loadMapData() {
