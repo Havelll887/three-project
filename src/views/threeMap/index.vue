@@ -1,20 +1,28 @@
 <template>
     <div class="three-map-container" id="mapContainer">
-        <canvas id="three3dMap"></canvas>
+        <canvas id="three3dMap" @mousemove="move"></canvas>
+       
     </div>
 </template>
 <script>
 import InitMap from "./src/js/map"
+import { getCabinetByName } from '@/api/index'
 export default {
     name: 'threeMap',
     data() {
         return {
-            threeMap: null
+            threeMap: null,
+            itemMsg:{}
         }
     },
     mounted() {
         let canvas = document.getElementById('three3dMap')
         this.threeMap = new InitMap(canvas)
+    },
+    methods: {
+        move(event) {
+            this.threeMap.setRaycaster(event)
+        }
     },
     beforeDestroy() {
         // 图形销毁

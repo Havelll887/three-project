@@ -77,7 +77,6 @@ export default class ThreeInit {
         // update renderer
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-        console.log('##', camera, renderer)
     }
 
 

@@ -12,7 +12,7 @@ import {
 const COLOR_ARR = ['#e83c62', '#ab2385', '#214897', '#f5d1b9', '#ff914b', '#d25131']
 
 // 高亮颜色
-const HIGHT_COLOR = '#ffff00'
+const HIGHT_COLOR = '#06266f'
 
 // 墨卡托投影转换
 const projection = d3.geoMercator().center([115.892, 28.6765]).scale(80).translate([0, 0]);
@@ -37,17 +37,21 @@ const extrudeSettings = {
     bevelSegments: 1,
 };
 
+// 当前选择的目标
+let curTarget
+let lastColor
 
 export default class InitMap {
     constructor(canvas) {
         this.initMap = new ThreeInit(canvas, true)
-        this.initMap.camera.position.set(0, -10, 14);
+        this.initMap.camera.position.set(0, 20, 0);
 
         this.createLabelRender()
-        this.animate()
 
         // 加载json数据
         this.loadMapData()
+        this.animates()
+
     }
 
     // 加载地图数据
@@ -114,10 +118,11 @@ export default class InitMap {
                     province.add(mesh);
                 })
                 let labels = this.createLabel(name, center, depth)
+                let icons = this.createIcon(center, depth)
                 let lines = this.createLine(points, depth)
                 province.add(...lines);
-                console.log('!!@', labels, lines)
                 province.add(labels);
+                province.add(icons);
             })
             // 将geo的属性放到省份模型中
             province.properties = ele.properties;
@@ -129,6 +134,8 @@ export default class InitMap {
             this.mapGroup.add(province);
         });
         this.initMap.scene.add(this.mapGroup)
+        // 重绘中心点
+        this.setCenter()
     }
 
     // 创建材质
@@ -137,9 +144,9 @@ export default class InitMap {
         const geometry = new THREE.ExtrudeGeometry(shape, { ...extrudeSettings, depth });
 
         // MeshStandardMaterial
-        const materialPlane = new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide });
+        const materialPlane = new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide, opacity: 0.6 });
 
-        const materialAround = new THREE.MeshBasicMaterial({ color: color, });
+        const materialAround = new THREE.MeshBasicMaterial({ color: color, opacity: 0.6 });
 
         const mesh = new THREE.Mesh(geometry, [
             materialPlane,
@@ -182,16 +189,15 @@ export default class InitMap {
         return label;
     }
 
-
-
     // 连续渲染
-    animate() {
+    animates() {
+        if (!this.initMap.renderer) return
         this.labelRenderer.render(this.initMap.scene, this.initMap.camera);
+        this.initMap.renderer.render(this.initMap.scene, this.initMap.camera);
         requestAnimationFrame(() => {
-            this.animate();
+            this.animates();
         });
     }
-
 
     // 构建标签渲染器
     createLabelRender() {
@@ -202,6 +208,102 @@ export default class InitMap {
         this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById("mapContainer").appendChild(this.labelRenderer.domElement);
     }
+
+    // 添加图标
+    createIcon(point, depth) {
+        const url = require('@/views/threeMap/src/img/icon.png')
+
+        const map = new THREE.TextureLoader().load(url);
+        const material = new THREE.SpriteMaterial({
+            map: map,
+            transparent: true,
+        });
+
+        // Sprite ———— 永远面向相机的平面
+        const sprite = new THREE.Sprite(material);
+        const [x, y] = projection(point);
+        sprite.position.set(x - 0.1, -y + 0.2, depth + 0.2);
+        sprite.scale.set(0.3, 0.3, 0.3);
+
+        sprite.renderOrder = 1;
+
+        return sprite;
+    }
+
+    // 中心点设置
+    setCenter() {
+        this.mapGroup.rotation.x = -Math.PI / 2;
+
+        // 使用包围盒设定中心点
+        const box = new THREE.Box3().setFromObject(this.mapGroup);
+        // 获取包围盒的中心点坐标
+        const center = box.getCenter(new THREE.Vector3());
+
+        const offset = [0, 0];
+        this.mapGroup.position.x = this.mapGroup.position.x - center.x - offset[0];
+        this.mapGroup.position.z = this.mapGroup.position.z - center.z - offset[1];
+    }
+
+    // 鼠标事件
+    setRaycaster(event) {
+        //射线投射器，可基于鼠标点和相机，在世界坐标系内建立一条射线，用于选中模型
+        const raycaster = new THREE.Raycaster();
+        //鼠标在裁剪空间中的点位
+        const pointer = new THREE.Vector2();
+        // 鼠标的canvas坐标转裁剪坐标
+        pointer.x = (event.layerX / window.innerWidth) * 2 - 1;
+        pointer.y = - (event.layerY / window.innerHeight) * 2 + 1;
+        // 基于鼠标点的裁剪坐标位和相机设置射线投射器
+        raycaster.setFromCamera(pointer, this.initMap.camera);
+        const intersects = raycaster
+            .intersectObjects(this.mapGroup.children)
+            .filter((item) => item.object.type !== "Line");
+
+        let intersectObj = intersects[0] ? (intersects[0].object) : null;
+
+
+
+        if (intersectObj && intersectObj.type === "Mesh") {
+
+            if (curTarget && curTarget !== intersectObj) {
+                const material = curTarget.material;
+                // material.color.set(HIGHT_COLOR);
+                // material[0].color = lastColor;
+                // material[1].color = lastColor;
+                material[0].color.set(lastColor);
+                material[1].color.set(lastColor);
+
+            }
+
+            if (intersectObj) {
+                if (intersectObj !== curTarget) {
+                    curTarget = intersectObj;
+                    const material = intersectObj.material
+                    lastColor = material[0].color.getStyle()
+
+                    material[0].color.set(HIGHT_COLOR);
+                    material[1].color.set(HIGHT_COLOR);
+
+                   
+                }
+                return curTarget
+            } else {
+                return null
+            }
+        } else if (intersectObj && intersectObj.type === "Sprite") {
+            console.log('@@', intersectObj)
+            return null
+        } else {
+            if (curTarget) {
+                const material = curTarget.material;
+                material[0].color.set(lastColor);
+                material[1].color.set(lastColor);
+                curTarget = null
+            }
+            return null
+        }
+    }
+
 
     // 图形销毁
     destroyed() {
