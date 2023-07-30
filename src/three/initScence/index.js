@@ -1,11 +1,12 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 export default class ThreeInit {
     constructor(
         canvas,
         controller = true,
-
+        id
     ) {
         // 渲染器
         this.renderer = new THREE.WebGLRenderer({
@@ -76,7 +77,9 @@ export default class ThreeInit {
         // update renderer
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        console.log('##', camera, renderer)
     }
+
 
     // 连续渲染
     animate() {

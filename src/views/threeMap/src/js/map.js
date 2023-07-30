@@ -2,6 +2,10 @@ import * as THREE from "three";
 import * as d3 from "d3";
 
 import ThreeInit from "@/three/initScence/index.js"
+import {
+    CSS2DRenderer,
+    CSS2DObject,
+} from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 
 // 颜色数组
@@ -38,10 +42,12 @@ export default class InitMap {
     constructor(canvas) {
         this.initMap = new ThreeInit(canvas, true)
         this.initMap.camera.position.set(0, -10, 14);
+
+        this.createLabelRender()
+        this.animate()
+
         // 加载json数据
         this.loadMapData()
-        // 添加灯光
-        // this.setLight()
     }
 
     // 加载地图数据
@@ -61,6 +67,9 @@ export default class InitMap {
             const province = new THREE.Object3D();
             // 每个省份的坐标信息
             const coordinates = ele.geometry.coordinates;
+            const { center, name } = ele.properties;
+
+
             // 选择颜色
             // const color = COLOR_ARR[index % COLOR_ARR.length]
 
@@ -89,12 +98,12 @@ export default class InitMap {
                     let mesh = this.creatMesh(shape, color, depth)
 
                     // 区分模型高度
-                    if (index % 2 === 0) {
-                        mesh.scale.set(1, 1, 1.2);
-                    }
-                    if (index % 3 === 0) {
-                        mesh.scale.set(1, 1, 1.5);
-                    }
+                    // if (index % 2 === 0) {
+                    //     mesh.scale.set(1, 1, 1.2);
+                    // }
+                    // if (index % 3 === 0) {
+                    //     mesh.scale.set(1, 1, 1.5);
+                    // }
 
                     // 使灯光投掷阴影
                     mesh.castShadow = true
@@ -104,15 +113,18 @@ export default class InitMap {
 
                     province.add(mesh);
                 })
+                let labels = this.createLabel(name, center, depth)
                 let lines = this.createLine(points, depth)
                 province.add(...lines);
+                console.log('!!@', labels, lines)
+                province.add(labels);
             })
             // 将geo的属性放到省份模型中
             province.properties = ele.properties;
-            if (ele.properties.centorid) {
-                const [x, y] = projection(ele.properties.centorid);
-                province.properties._centroid = [x, y];
-            }
+            // if (ele.properties.centorid) {
+            //     const [x, y] = projection(ele.properties.centorid);
+            //     province.properties._centroid = [x, y];
+            // }
 
             this.mapGroup.add(province);
         });
@@ -137,67 +149,60 @@ export default class InitMap {
         return mesh
     }
 
+    // 绘制边界线
     createLine(points, depth) {
+        // 边界图形实例化
         const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+
+        // 上边界线
         const uplineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-        const downlineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
         const upLine = new THREE.Line(lineGeometry, uplineMaterial);
+        upLine.position.z = depth + 0.02;
+
+        // 下边界线
+        const downlineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
         const downLine = new THREE.Line(lineGeometry, downlineMaterial);
         downLine.position.z = -0.02;
-        upLine.position.z = depth + 0.3;
-        console.log([upLine, downLine])
+
         return [upLine, downLine];
-
     }
-    // https://juejin.cn/post/7247027696822304827#heading-7
 
-    setLight() {
+    // 标签绘制
+    createLabel(name, point, depth) {
+        const div = document.createElement("div");
+        div.style.color = "#fff";
+        div.style.fontSize = "14px";
+        div.style.textShadow = "1px 1px 2px #047cd6";
+        div.textContent = name;
+        const label = new CSS2DObject(div);
 
-        let ambientLight = new THREE.AmbientLight(0xffffff, 1); // 环境光
+        const [x, y] = projection(point);
+        label.position.set(x, -y, depth);
 
-        const light = new THREE.DirectionalLight(0xffffff, 0.5); // 平行光
-        light.position.set(20, -50, 20);
-
-        light.castShadow = true;
-        light.shadow.mapSize.width = 1024;
-        light.shadow.mapSize.height = 1024;
-
-
-        // 半球光
-        let hemiLight = new THREE.HemisphereLight('#80edff', '#75baff', 0.3)
-        // 这个也是默认位置
-        hemiLight.position.set(20, -50, 0)
-        this.initMap.scene.add(hemiLight)
-        this.initMap.scene.add(light);
-        this.initMap.scene.add(ambientLight);
-
-
-        const pointLight = new THREE.PointLight(0xffffff, 0.5)
-        pointLight.position.set(20, -50, 50);
-
-        pointLight.castShadow = true;
-        pointLight.shadow.mapSize.width = 1024;
-        pointLight.shadow.mapSize.height = 1024;
-
-
-        const pointLight2 = new THREE.PointLight(0xffffff, 0.5)
-        pointLight2.position.set(50, -50, 20);
-        pointLight2.castShadow = true;
-        pointLight2.shadow.mapSize.width = 1024;
-        pointLight2.shadow.mapSize.height = 1024;
-
-        const pointLight3 = new THREE.PointLight(0xffffff, 0.5)
-        pointLight3.position.set(-50, -50, 20);
-        pointLight3.castShadow = true;
-        pointLight3.shadow.mapSize.width = 1024;
-        pointLight3.shadow.mapSize.height = 1024;
-
-        this.initMap.scene.add(ambientLight);
-        this.initMap.scene.add(light);
-        this.initMap.scene.add(pointLight);
-        this.initMap.scene.add(pointLight2);
-        this.initMap.scene.add(pointLight3);
+        return label;
     }
+
+
+
+    // 连续渲染
+    animate() {
+        this.labelRenderer.render(this.initMap.scene, this.initMap.camera);
+        requestAnimationFrame(() => {
+            this.animate();
+        });
+    }
+
+
+    // 构建标签渲染器
+    createLabelRender() {
+        this.labelRenderer = new CSS2DRenderer();
+        this.labelRenderer.domElement.style.position = "absolute";
+        this.labelRenderer.domElement.style.top = "0px";
+        this.labelRenderer.domElement.style.pointerEvents = "none";
+        this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById("mapContainer").appendChild(this.labelRenderer.domElement);
+    }
+
     // 图形销毁
     destroyed() {
         if (this.initMap.renderer) {

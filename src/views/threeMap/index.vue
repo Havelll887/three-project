@@ -1,5 +1,5 @@
 <template>
-    <div class="three-map-container">
+    <div class="three-map-container" id="mapContainer">
         <canvas id="three3dMap"></canvas>
     </div>
 </template>
