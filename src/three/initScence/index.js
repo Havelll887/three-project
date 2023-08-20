@@ -46,8 +46,11 @@ export default class ThreeInit {
         // 手动更新相机的投影矩阵
         this.camera.updateProjectionMatrix();  // 更新相机矩阵
 
+        this.winResize(this.camera, this.renderer)
         // 窗口变化监听
-        window.addEventListener("resize", this.winResize(this.camera, this.renderer));
+        window.addEventListener("resize", () => {
+            this.winResize(this.camera, this.renderer)
+        });
         // 鼠标移动事件
         // document.addEventListener('pointermove', this.onPointerMove);
         //设置背景颜色
@@ -70,13 +73,18 @@ export default class ThreeInit {
 
     // 窗口边界变化
     winResize(camera, renderer) {
-        // update camera
-        camera.aspect = window.innerWidth / window.innerHeight;
-        // 手动更新相机的投影矩阵
-        camera.updateProjectionMatrix();
-        // update renderer
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        console.log('@@', camera, renderer)
+        if (camera) {
+            // update camera
+            camera.aspect = window.innerWidth / window.innerHeight;
+            // 手动更新相机的投影矩阵
+            camera.updateProjectionMatrix();
+        }
+        if (renderer) {
+            // update renderer
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        }
     }
 
 
